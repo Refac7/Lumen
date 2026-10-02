@@ -35,8 +35,7 @@
 
 	/* 卡片投影：壁纸之上所有卡片共用同一层海拔 */
 	--card-shadow:
-		0 1px 2px rgb(0 0 0 / 0.04),
-		0 16px 40px -16px rgb(0 0 0 / 0.18);
+		0 1px 2px rgb(0 0 0 / 0.04), 0 16px 40px -16px rgb(0 0 0 / 0.18);
 	/* 卡片内的次级小卡（链接行）底色与描边 */
 	--tile-bg: rgb(0 0 0 / 0.035);
 	--tile-border: rgb(0 0 0 / 0.05);
@@ -107,8 +106,7 @@
 	--btn-plain-bg-active: oklch(0.27 0.025 var(--hue));
 
 	--card-shadow:
-		0 1px 2px rgb(0 0 0 / 0.25),
-		0 16px 40px -16px rgb(0 0 0 / 0.5);
+		0 1px 2px rgb(0 0 0 / 0.25), 0 16px 40px -16px rgb(0 0 0 / 0.5);
 	--tile-bg: rgb(255 255 255 / 0.05);
 	--tile-border: rgb(255 255 255 / 0.07);
 
@@ -175,7 +173,7 @@ body {
 		"Helvetica Neue",
 		Arial,
 		"Noto Sans SC",
-		 sans-serif,
+		sans-serif,
 		"Apple Color Emoji",
 		"Segoe UI Emoji",
 		"Segoe UI Symbol",

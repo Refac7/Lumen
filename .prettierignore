@@ -1,0 +1,12 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# lockfiles
+pnpm-lock.yaml
+
+# misc
+*.min.js

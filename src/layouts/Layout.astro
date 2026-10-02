@@ -49,14 +49,9 @@ const rootStyle = `--hue: ${hue}; --wallpaper-blur: ${background.blur}px; --wall
 	<body>
 		<div class="wallpaper" aria-hidden="true">
 			<picture>
-				{
-					background.mobile && (
-						<source
-							media="(max-width: 640px)"
-							srcset={background.mobile}
-						/>
-					)
-				}
+				{background.mobile && (
+					<source media="(max-width: 640px)" srcset={background.mobile} />
+				)}
 				<img
 					src={background.desktop}
 					alt=""

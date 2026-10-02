@@ -8,17 +8,11 @@ const subtitles = [profile.bio, ...profile.about];
 ---
 
 <section class="card-base banner rise">
-
 	<div class="banner-media" aria-hidden="true">
 		<picture>
-			{
-				background.mobile && (
-					<source
-						media="(max-width: 640px)"
-						srcset={background.mobile}
-					/>
-				)
-			}
+			{background.mobile && (
+				<source media="(max-width: 640px)" srcset={background.mobile} />
+			)}
 			<img
 				src={background.desktop}
 				alt=""
@@ -42,20 +36,18 @@ const subtitles = [profile.bio, ...profile.about];
 		</p>
 
 		<div class="banner-links">
-			{
-				profile.links.map((link) => (
-					<a
-						class="banner-link"
-						href={link.url}
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label={link.name}
-						title={link.name}
-					>
-						<Icon name={link.icon} />
-					</a>
-				))
-			}
+			{profile.links.map((link) => (
+				<a
+					class="banner-link"
+					href={link.url}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label={link.name}
+					title={link.name}
+				>
+					<Icon name={link.icon} />
+				</a>
+			))}
 		</div>
 	</div>
 </section>

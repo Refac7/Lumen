@@ -33,11 +33,15 @@ import { profile } from "@/config/profile";
 		<span class="accent-bar" aria-hidden="true"></span>
 
 		<div class="about">
-			{profile.about.map((line) => <p>{line}</p>)}
+			{profile.about.map((line) => (
+				<p>{line}</p>
+			))}
 		</div>
 
 		<div class="tags">
-			{profile.tags.map((tag) => <span class="btn-regular tag">{tag}</span>)}
+			{profile.tags.map((tag) => (
+				<span class="btn-regular tag">{tag}</span>
+			))}
 		</div>
 
 		<button class="btn-regular copy-btn" type="button" data-copy-home>
@@ -48,7 +52,8 @@ import { profile } from "@/config/profile";
 </section>
 
 <script>
-	const buttons = document.querySelectorAll<HTMLButtonElement>("[data-copy-home]");
+	const buttons =
+		document.querySelectorAll<HTMLButtonElement>("[data-copy-home]");
 	buttons.forEach((button) => {
 		const label = button.querySelector<HTMLElement>("[data-copy-label]");
 		const original = label?.textContent ?? "";

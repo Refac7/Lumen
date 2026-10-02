@@ -19,6 +19,7 @@ pnpm dev       # 开发 http://localhost:4321
 pnpm build     # 构建到 dist/
 pnpm preview   # 预览构建产物
 pnpm check     # astro check 类型/语法检查
+pnpm format    # Prettier 格式化全部文件
 ```
 
 ## 目录结构
@@ -50,16 +51,22 @@ src/
 
 ```ts
 export const profile: Profile = {
-  name: "Refac7",
-  bio: "你与光芒 / You & Radiance",
-  badge: "LUMEN · 个人主页",
-  avatar: "https://…/avatar.jpg",
-  hue: 250,          // 主题色相 0-360
-  about: ["…"],      // 个人介绍段落
-  tags: ["…"],       // 个人标签
-  links: [
-    { name: "GitHub", icon: "fa7-brands:github", url: "…", hint: "…", group: "社交 SOCIAL" },
-  ],
+	name: "Refac7",
+	bio: "你与光芒 / You & Radiance",
+	badge: "LUMEN · 个人主页",
+	avatar: "https://…/avatar.jpg",
+	hue: 250, // 主题色相 0-360
+	about: ["…"], // 个人介绍段落
+	tags: ["…"], // 个人标签
+	links: [
+		{
+			name: "GitHub",
+			icon: "fa7-brands:github",
+			url: "…",
+			hint: "…",
+			group: "社交 SOCIAL",
+		},
+	],
 };
 ```
 
@@ -69,12 +76,12 @@ export const profile: Profile = {
 
 ```ts
 export const background: BackgroundConfig = {
-  desktop: "/wallpaper.jpg", // 桌面壁纸，可填远程 URL
-  mobile: "/wallpaper.jpg",  // 移动端壁纸，留空则复用 desktop
-  blur: 64,                  // 高斯模糊半径（px）
-  dim: 0.3,                  // 底色遮罩强度 0-1
-  scale: 1.3,                // 缩放，抵消模糊边缘露白
-  position: "0% 20%",        // object-position
+	desktop: "/wallpaper.jpg", // 桌面壁纸，可填远程 URL
+	mobile: "/wallpaper.jpg", // 移动端壁纸，留空则复用 desktop
+	blur: 64, // 高斯模糊半径（px）
+	dim: 0.3, // 底色遮罩强度 0-1
+	scale: 1.3, // 缩放，抵消模糊边缘露白
+	position: "0% 20%", // object-position
 };
 ```
 
@@ -84,27 +91,27 @@ export const background: BackgroundConfig = {
 
 ### 卡片
 
-| 类 | 用途 |
-| --- | --- |
-| `.card-base` | 卡片外壳：`--radius-large` 圆角 + 发丝描边 + `--card-shadow` 投影 |
-| `.card-head` | 卡片标题行（图标 + 大写标题 + 右侧 `.card-head-badge` 计数徽标） |
-| `.card-foot` | 卡片底部虚线说明条 |
-| `.link-row` | 卡片内的链接小卡（tile），悬停上浮并染主色描边 |
-| `.btn-regular` | 主色胶囊按钮（标签 / 操作按钮） |
-| `.glass` | 毛玻璃面（导航栏、悬浮控件） |
-| `.rise` | 入场动画，用 `style="animation-delay: Nms"` 交错播放 |
+| 类             | 用途                                                              |
+| -------------- | ----------------------------------------------------------------- |
+| `.card-base`   | 卡片外壳：`--radius-large` 圆角 + 发丝描边 + `--card-shadow` 投影 |
+| `.card-head`   | 卡片标题行（图标 + 大写标题 + 右侧 `.card-head-badge` 计数徽标）  |
+| `.card-foot`   | 卡片底部虚线说明条                                                |
+| `.link-row`    | 卡片内的链接小卡（tile），悬停上浮并染主色描边                    |
+| `.btn-regular` | 主色胶囊按钮（标签 / 操作按钮）                                   |
+| `.glass`       | 毛玻璃面（导航栏、悬浮控件）                                      |
+| `.rise`        | 入场动画，用 `style="animation-delay: Nms"` 交错播放              |
 
 ### 常用令牌
 
-| 令牌 | 说明 |
-| --- | --- |
-| `--hue` | 主题色相，全部颜色由它派生 |
-| `--card-bg` / `--page-bg` | 卡片底色 / 页面底色 |
-| `--tile-bg` / `--tile-border` | 卡片内次级小卡的底色与描边 |
-| `--primary` | 主色 |
-| `--line-divider` | 发丝描边 |
-| `--radius-large` | 卡片圆角（1rem） |
-| `--duration-normal` / `--ease-standard` | 过渡时长 / 缓动 |
+| 令牌                                    | 说明                       |
+| --------------------------------------- | -------------------------- |
+| `--hue`                                 | 主题色相，全部颜色由它派生 |
+| `--card-bg` / `--page-bg`               | 卡片底色 / 页面底色        |
+| `--tile-bg` / `--tile-border`           | 卡片内次级小卡的底色与描边 |
+| `--primary`                             | 主色                       |
+| `--line-divider`                        | 发丝描边                   |
+| `--radius-large`                        | 卡片圆角（1rem）           |
+| `--duration-normal` / `--ease-standard` | 过渡时长 / 缓动            |
 
 亮暗两套令牌分别定义在 `:root` 与 `:root.dark` 下；组件内覆盖暗色时使用 `:global(.dark) .x`（Astro 作用域样式）。
 
@@ -125,4 +132,4 @@ export const background: BackgroundConfig = {
 
 ## 许可
 
-Private。
+[MIT](LICENSE) © 2026 Refac7

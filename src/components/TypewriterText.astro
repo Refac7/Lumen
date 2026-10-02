@@ -6,12 +6,7 @@ interface Props {
 	pauseTime?: number;
 }
 
-const {
-	text,
-	speed = 90,
-	deleteSpeed = 40,
-	pauseTime = 2200,
-} = Astro.props;
+const { text, speed = 90, deleteSpeed = 40, pauseTime = 2200 } = Astro.props;
 const textData = JSON.stringify(text);
 const fallback = Array.isArray(text) ? text[0] : text;
 ---
@@ -21,8 +16,10 @@ const fallback = Array.isArray(text) ? text[0] : text;
 	data-text={textData}
 	data-speed={speed}
 	data-delete-speed={deleteSpeed}
-	data-pause-time={pauseTime}>{fallback}</span
+	data-pause-time={pauseTime}
 >
+	{fallback}
+</span>
 
 <script>
 	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -57,9 +54,7 @@ const fallback = Array.isArray(text) ? text[0] : text;
 			} catch {
 				parsed = raw;
 			}
-			this.texts = Array.isArray(parsed)
-				? (parsed as string[])
-				: [String(raw)];
+			this.texts = Array.isArray(parsed) ? (parsed as string[]) : [String(raw)];
 			this.speed = Number(el.dataset.speed) || 90;
 			this.deleteSpeed = Number(el.dataset.deleteSpeed) || 40;
 			this.pauseTime = Number(el.dataset.pauseTime) || 2200;
