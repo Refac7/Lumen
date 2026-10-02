@@ -1,0 +1,523 @@
+/*
+ * Lumen design tokens — derived from Firefly (src/styles/variables.styl + main.css)
+ * oklch hue driven theme, light/dark via `html.dark`, 150ms standard transitions.
+ */
+
+:root {
+	--hue: 250;
+
+	--radius-sm: 0.25rem;
+	--radius-md: 0.375rem;
+	--radius-lg: 0.5rem;
+	--radius-xl: 0.75rem;
+	--radius-2xl: 1rem;
+	--radius-large: 1rem;
+	--radius-full: 9999px;
+
+	--ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-decelerate: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	--duration-fast: 100ms;
+	--duration-normal: 150ms;
+	--duration-medium: 200ms;
+	--duration-slow: 250ms;
+
+	--spacing-sm: 0.5rem;
+	--spacing-md: 0.75rem;
+	--spacing-lg: 1rem;
+	--spacing-xl: 1.25rem;
+	--spacing-2xl: 1.5rem;
+	--spacing-3xl: 2rem;
+
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+	--shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+	/* 卡片投影：壁纸之上所有卡片共用同一层海拔 */
+	--card-shadow:
+		0 1px 2px rgb(0 0 0 / 0.04),
+		0 16px 40px -16px rgb(0 0 0 / 0.18);
+	/* 卡片内的次级小卡（链接行）底色与描边 */
+	--tile-bg: rgb(0 0 0 / 0.035);
+	--tile-border: rgb(0 0 0 / 0.05);
+
+	/* light theme */
+	--primary: oklch(0.7 0.14 var(--hue));
+	--page-bg: oklch(0.95 0.01 var(--hue));
+	--card-bg: white;
+	--deep-text: oklch(0.25 0.02 var(--hue));
+	--title-active: oklch(0.6 0.1 var(--hue));
+
+	--btn-content: oklch(0.55 0.12 var(--hue));
+	--btn-regular-bg: oklch(0.95 0.025 var(--hue));
+	--btn-regular-bg-hover: oklch(0.9 0.05 var(--hue));
+	--btn-regular-bg-active: oklch(0.85 0.08 var(--hue));
+	--btn-plain-bg-hover: oklch(0.95 0.025 var(--hue));
+	--btn-plain-bg-active: oklch(0.98 0.01 var(--hue));
+
+	--line-divider: rgba(0, 0, 0, 0.08);
+	--line-color: rgba(0, 0, 0, 0.1);
+	--meta-divider: rgba(0, 0, 0, 0.2);
+
+	--muted: oklch(0.93 0.015 var(--hue));
+	--selection-bg: oklch(0.9 0.05 var(--hue));
+
+	--link-underline: oklch(0.93 0.04 var(--hue));
+	--link-hover: oklch(0.95 0.025 var(--hue));
+	--link-active: oklch(0.9 0.05 var(--hue));
+
+	--float-panel-bg: white;
+
+	--navbar-glass-highlight: rgba(255, 255, 255, 0.18);
+	--navbar-glass-hairline: rgba(0, 0, 0, 0.06);
+
+	/* 毛玻璃面（导航栏 / 悬浮控件） */
+	--glass-bg: color-mix(in srgb, var(--card-bg) 45%, transparent);
+	--glass-blur: 20px;
+
+	/* 横幅遮罩：壁纸已是完整插画，只压一层轻暗光保证白字可读，保留画面本身 */
+	--banner-scrim:
+		radial-gradient(
+			70% 60% at 76% 72%,
+			oklch(0.66 0.16 calc(var(--hue) + 45) / 0.16),
+			transparent 72%
+		),
+		linear-gradient(
+			180deg,
+			rgb(0 0 0 / 0.44) 0%,
+			rgb(0 0 0 / 0.32) 55%,
+			rgb(0 0 0 / 0.17) 80%,
+			rgb(0 0 0 / 0.05) 94%,
+			rgb(0 0 0 / 0) 100%
+		);
+}
+
+:root.dark {
+	--primary: oklch(0.75 0.14 var(--hue));
+	--page-bg: oklch(0.16 0.014 var(--hue));
+	--card-bg: oklch(0.23 0.015 var(--hue));
+	--deep-text: oklch(0.75 0.02 var(--hue));
+	--title-active: oklch(0.7 0.1 var(--hue));
+
+	--btn-content: oklch(0.75 0.1 var(--hue));
+	--btn-regular-bg: oklch(0.33 0.035 var(--hue));
+	--btn-regular-bg-hover: oklch(0.38 0.04 var(--hue));
+	--btn-regular-bg-active: oklch(0.43 0.045 var(--hue));
+	--btn-plain-bg-hover: oklch(0.3 0.035 var(--hue));
+	--btn-plain-bg-active: oklch(0.27 0.025 var(--hue));
+
+	--card-shadow:
+		0 1px 2px rgb(0 0 0 / 0.25),
+		0 16px 40px -16px rgb(0 0 0 / 0.5);
+	--tile-bg: rgb(255 255 255 / 0.05);
+	--tile-border: rgb(255 255 255 / 0.07);
+
+	--line-divider: rgba(255, 255, 255, 0.08);
+	--line-color: rgba(255, 255, 255, 0.1);
+	--meta-divider: rgba(255, 255, 255, 0.2);
+
+	--muted: oklch(0.25 0.015 var(--hue));
+	--selection-bg: oklch(0.4 0.08 var(--hue));
+
+	--link-underline: oklch(0.4 0.08 var(--hue));
+	--link-hover: oklch(0.4 0.08 var(--hue));
+	--link-active: oklch(0.35 0.07 var(--hue));
+
+	--float-panel-bg: oklch(0.19 0.015 var(--hue));
+
+	--navbar-glass-highlight: rgba(255, 255, 255, 0.06);
+	--navbar-glass-hairline: rgba(255, 255, 255, 0.1);
+
+	--glass-bg: color-mix(in srgb, var(--card-bg) 50%, transparent);
+	--glass-blur: 20px;
+
+	--banner-scrim:
+		radial-gradient(
+			70% 60% at 76% 72%,
+			oklch(0.5 0.14 calc(var(--hue) + 45) / 0.18),
+			transparent 72%
+		),
+		linear-gradient(
+			180deg,
+			rgb(0 0 0 / 0.52) 0%,
+			rgb(0 0 0 / 0.36) 55%,
+			rgb(0 0 0 / 0.2) 80%,
+			rgb(0 0 0 / 0.06) 94%,
+			rgb(0 0 0 / 0) 100%
+		);
+}
+
+/* ===== base ===== */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+	-webkit-text-size-adjust: 100%;
+	background-color: var(--page-bg);
+	transition: background-color var(--duration-normal) var(--ease-standard);
+}
+
+/* 背景层（模糊壁纸）挂在负 z-index，页面底色必须留在 html 上，否则会把它盖住 */
+body {
+	margin: 0;
+	min-height: 100vh;
+	background-color: transparent;
+	color: var(--deep-text);
+	font-family:
+		system-ui,
+		-apple-system,
+		"Segoe UI",
+		Roboto,
+		"Helvetica Neue",
+		Arial,
+		"Noto Sans SC",
+		 sans-serif,
+		"Apple Color Emoji",
+		"Segoe UI Emoji",
+		"Segoe UI Symbol",
+		"Noto Color Emoji";
+	font-size: 16px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	transition:
+		background-color var(--duration-normal) var(--ease-standard),
+		color var(--duration-normal) var(--ease-standard);
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+span,
+li,
+ul {
+	transition:
+		color var(--duration-normal) var(--ease-standard),
+		background-color var(--duration-normal) var(--ease-standard),
+		border-color var(--duration-normal) var(--ease-standard),
+		text-decoration-color var(--duration-normal) var(--ease-standard);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+::selection {
+	background-color: var(--selection-bg);
+}
+
+:focus-visible {
+	outline: 2px solid var(--primary);
+	outline-offset: 2px;
+}
+
+/* ===== blurred wallpaper ===== */
+.wallpaper {
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	overflow: hidden;
+	pointer-events: none;
+}
+.wallpaper picture,
+.wallpaper img {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.wallpaper img {
+	object-fit: cover;
+	object-position: var(--wallpaper-position, center);
+	/* 高倍模糊：配合 scale 抵消模糊造成的边缘透明 */
+	filter: blur(var(--wallpaper-blur, 72px)) saturate(1.15);
+	transform: scale(var(--wallpaper-scale, 1.15));
+	transform-origin: center;
+	/* 首帧避免白闪 */
+	opacity: 0;
+	animation: wallpaper-in 700ms var(--ease-decelerate) 60ms both;
+}
+/* 页面底色遮罩：亮色压淡、暗色压深，保证卡片与文字可读 */
+.wallpaper::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-color: var(--page-bg);
+	opacity: var(--wallpaper-dim, 0.42);
+	transition: background-color var(--duration-normal) var(--ease-standard);
+}
+/* 主题色氛围光：让壁纸与 --hue 同频，切换色相时背景一起呼吸 */
+.wallpaper::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		radial-gradient(
+			55% 55% at 18% 22%,
+			color-mix(in oklch, var(--primary) 55%, transparent),
+			transparent 70%
+		),
+		radial-gradient(
+			50% 50% at 82% 78%,
+			color-mix(in oklch, var(--primary) 40%, transparent),
+			transparent 72%
+		);
+	opacity: 0.24;
+	transition: background var(--duration-slow) var(--ease-standard);
+}
+/* dim 由 Layout 内联为 --wallpaper-dim-config，暗色在其基础上加深 */
+:root {
+	--wallpaper-dim: var(--wallpaper-dim-config, 0.42);
+}
+:root.dark {
+	--wallpaper-dim: calc(var(--wallpaper-dim-config, 0.42) + 0.16);
+}
+@keyframes wallpaper-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* ===== Firefly parity helpers ===== */
+.text-90 {
+	color: rgb(0 0 0 / 0.9);
+}
+.text-75 {
+	color: rgb(0 0 0 / 0.75);
+}
+.text-50 {
+	color: rgb(0 0 0 / 0.5);
+}
+.text-30 {
+	color: rgb(0 0 0 / 0.3);
+}
+.dark .text-90 {
+	color: rgb(255 255 255 / 0.9);
+}
+.dark .text-75 {
+	color: rgb(255 255 255 / 0.75);
+}
+.dark .text-50 {
+	color: rgb(255 255 255 / 0.5);
+}
+.dark .text-30 {
+	color: rgb(255 255 255 / 0.3);
+}
+
+/* card surface */
+.card-base {
+	border-radius: var(--radius-large);
+	overflow: hidden;
+	background-color: var(--card-bg);
+	/* 壁纸背景上给一层发丝线，卡片边界更清晰（对应 Firefly enable-card-border） */
+	border: 1px solid var(--line-divider);
+	box-shadow: var(--card-shadow);
+	transition:
+		background-color var(--duration-normal) var(--ease-standard),
+		box-shadow var(--duration-medium) var(--ease-standard);
+}
+
+/* card header — 所有内容卡片共用的标题行（图标 + 标题 + 右侧徽标） */
+.card-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	padding: 1rem 1.25rem 0.5rem;
+}
+.card-head-title {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 0;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgb(0 0 0 / 0.4);
+	transition: color var(--duration-normal) var(--ease-standard);
+}
+.card-head-title svg {
+	width: 0.75rem;
+	height: 0.75rem;
+	flex: none;
+	color: var(--primary);
+}
+.dark .card-head-title {
+	color: rgb(255 255 255 / 0.4);
+}
+.card-head-badge {
+	min-width: 1.375rem;
+	height: 1.375rem;
+	padding-inline: 0.4rem;
+	border-radius: var(--radius-full);
+	background-color: var(--btn-regular-bg);
+	color: var(--btn-content);
+	font-size: 0.6875rem;
+	font-weight: 700;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		background-color var(--duration-normal) var(--ease-standard),
+		color var(--duration-normal) var(--ease-standard);
+}
+
+/* card footer — 卡片底部的虚线说明条 */
+.card-foot {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	margin: 0.5rem 1.25rem 0;
+	padding-top: 0.75rem;
+	border-top: 1px dashed var(--line-divider);
+	font-size: 0.75rem;
+	color: rgb(0 0 0 / 0.38);
+	transition: color var(--duration-normal) var(--ease-standard);
+}
+.card-foot svg {
+	width: 0.6875rem;
+	height: 0.6875rem;
+	flex: none;
+}
+.dark .card-foot {
+	color: rgb(255 255 255 / 0.38);
+}
+
+/* tinted pill button */
+.btn-regular {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	background-color: var(--btn-regular-bg);
+	color: var(--btn-content);
+	border: none;
+	cursor: pointer;
+	transition:
+		background-color var(--duration-normal) var(--ease-standard),
+		color var(--duration-normal) var(--ease-standard),
+		transform var(--duration-normal) var(--ease-standard);
+}
+.btn-regular:hover {
+	background-color: var(--btn-regular-bg-hover);
+}
+.btn-regular:active {
+	background-color: var(--btn-regular-bg-active);
+}
+
+/* row link — 卡片内的次级小卡（tile），与 .card-base 同族语言 */
+.link-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	min-width: 0;
+	min-height: 3.25rem;
+	padding: 0.375rem 0.625rem;
+	border-radius: var(--radius-xl);
+	border: 1px solid var(--tile-border);
+	color: rgb(0 0 0 / 0.75);
+	background-color: var(--tile-bg);
+	transition:
+		background-color var(--duration-normal) var(--ease-standard),
+		border-color var(--duration-normal) var(--ease-standard),
+		color var(--duration-normal) var(--ease-standard),
+		box-shadow var(--duration-normal) var(--ease-standard),
+		transform var(--duration-normal) var(--ease-standard);
+}
+.link-row:hover,
+.link-row:focus-visible {
+	color: var(--primary);
+	background-color: var(--btn-plain-bg-hover);
+	border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+	box-shadow: var(--shadow-sm);
+	transform: translateY(-1px);
+}
+.link-row:active {
+	transform: translateY(0);
+	background-color: var(--btn-plain-bg-active);
+}
+.dark .link-row {
+	color: rgb(255 255 255 / 0.75);
+}
+.link-row .link-url {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 0.8125rem;
+	color: rgb(0 0 0 / 0.4);
+	transition: color var(--duration-normal) var(--ease-standard);
+}
+@media (min-width: 960px) {
+	.link-row {
+		min-height: 3.5rem;
+	}
+}
+.dark .link-row .link-url {
+	color: rgb(255 255 255 / 0.4);
+}
+.link-row:hover .link-url,
+.link-row:focus-visible .link-url {
+	color: currentColor;
+}
+
+/* 毛玻璃面：顶部导航栏与悬浮控件共用（对应 Firefly #navbar>div 的玻璃配方） */
+.glass {
+	background-color: var(--glass-bg);
+	backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
+	-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
+	border: 1px solid var(--line-divider);
+	box-shadow:
+		inset 0 1px 0 var(--navbar-glass-highlight),
+		0 1px 0 var(--navbar-glass-hairline);
+	transition:
+		background-color var(--duration-medium) var(--ease-standard),
+		box-shadow var(--duration-medium) var(--ease-standard);
+}
+
+/* entrance animation */
+@keyframes lumen-rise {
+	from {
+		opacity: 0;
+		transform: translateY(12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+.rise {
+	animation: lumen-rise 500ms var(--ease-decelerate) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	.rise {
+		animation: none;
+	}
+	*,
+	*::before,
+	*::after {
+		transition-duration: 1ms !important;
+		animation-duration: 1ms !important;
+	}
+}

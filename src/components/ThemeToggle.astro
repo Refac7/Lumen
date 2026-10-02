@@ -1,0 +1,65 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+	type="button"
+	id="theme-toggle"
+	class="theme-toggle"
+	aria-label="切换亮暗主题"
+	title="切换亮暗主题"
+>
+	<span class="icon-sun"><Icon name="fa7-regular:sun" /></span>
+	<span class="icon-moon"><Icon name="fa7-regular:moon" /></span>
+</button>
+
+<script>
+	const toggle = document.getElementById("theme-toggle");
+	toggle?.addEventListener("click", () => {
+		const dark = document.documentElement.classList.toggle("dark");
+		try {
+			localStorage.setItem("lumen-theme", dark ? "dark" : "light");
+		} catch (e) {
+			/* 隐私模式下忽略 */
+		}
+	});
+</script>
+
+<style>
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: var(--radius-xl);
+		background-color: transparent;
+		border: none;
+		color: var(--btn-content);
+		cursor: pointer;
+		transition:
+			background-color var(--duration-normal) var(--ease-standard),
+			color var(--duration-normal) var(--ease-standard),
+			transform var(--duration-normal) var(--ease-standard);
+	}
+	.theme-toggle:hover {
+		background-color: var(--btn-regular-bg-hover);
+	}
+	.theme-toggle:active {
+		background-color: var(--btn-regular-bg-active);
+		transform: scale(0.94);
+	}
+	.theme-toggle :global(svg) {
+		width: 1.0625rem;
+		height: 1.0625rem;
+	}
+	.icon-moon {
+		display: none;
+	}
+	:global(.dark) .icon-sun {
+		display: none;
+	}
+	:global(.dark) .icon-moon {
+		display: inline-flex;
+	}
+</style>

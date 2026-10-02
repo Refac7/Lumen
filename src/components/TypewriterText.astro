@@ -1,0 +1,151 @@
+---
+interface Props {
+	text: string | string[];
+	speed?: number;
+	deleteSpeed?: number;
+	pauseTime?: number;
+}
+
+const {
+	text,
+	speed = 90,
+	deleteSpeed = 40,
+	pauseTime = 2200,
+} = Astro.props;
+const textData = JSON.stringify(text);
+const fallback = Array.isArray(text) ? text[0] : text;
+---
+
+<span
+	class="typewriter"
+	data-text={textData}
+	data-speed={speed}
+	data-delete-speed={deleteSpeed}
+	data-pause-time={pauseTime}>{fallback}</span
+>
+
+<script>
+	const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	function segment(text: string): string[] {
+		try {
+			const segmenter = new Intl.Segmenter(undefined, {
+				granularity: "grapheme",
+			});
+			return Array.from(segmenter.segment(text), (s) => s.segment);
+		} catch {
+			return Array.from(text);
+		}
+	}
+
+	class Typewriter {
+		private el: HTMLElement;
+		private texts: string[];
+		private speed: number;
+		private deleteSpeed: number;
+		private pauseTime: number;
+		private textIndex = 0;
+		private charIndex = 0;
+		private deleting = false;
+
+		constructor(el: HTMLElement) {
+			this.el = el;
+			const raw = el.dataset.text || "";
+			let parsed: unknown;
+			try {
+				parsed = JSON.parse(raw);
+			} catch {
+				parsed = raw;
+			}
+			this.texts = Array.isArray(parsed)
+				? (parsed as string[])
+				: [String(raw)];
+			this.speed = Number(el.dataset.speed) || 90;
+			this.deleteSpeed = Number(el.dataset.deleteSpeed) || 40;
+			this.pauseTime = Number(el.dataset.pauseTime) || 2200;
+			this.el.textContent = "";
+			this.tick();
+		}
+
+		private current(): string[] {
+			return segment(this.texts[this.textIndex] ?? "");
+		}
+
+		private tick() {
+			const chars = this.current();
+
+			if (this.deleting) {
+				if (this.charIndex > 0) {
+					this.charIndex--;
+					this.el.textContent = chars.slice(0, this.charIndex).join("");
+					window.setTimeout(() => this.tick(), this.deleteSpeed);
+					return;
+				}
+				this.deleting = false;
+				this.textIndex = (this.textIndex + 1) % this.texts.length;
+				window.setTimeout(() => this.tick(), this.speed);
+				return;
+			}
+
+			if (this.charIndex < chars.length) {
+				this.charIndex++;
+				this.el.textContent = chars.slice(0, this.charIndex).join("");
+				window.setTimeout(() => this.tick(), this.speed);
+				return;
+			}
+
+			if (this.texts.length > 1) {
+				this.deleting = true;
+				window.setTimeout(() => this.tick(), this.pauseTime);
+			}
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".typewriter").forEach((el) => {
+		if (el.dataset.typewriterReady) return;
+		el.dataset.typewriterReady = "1";
+
+		const raw = el.dataset.text || "";
+		let parsed: unknown;
+		try {
+			parsed = JSON.parse(raw);
+		} catch {
+			parsed = raw;
+		}
+		const texts = Array.isArray(parsed) ? (parsed as string[]) : [raw];
+		if (!texts.length) return;
+
+		// 降低动态偏好：保留首条文案，不播放动画
+		if (reduced) {
+			el.textContent = texts[0];
+			return;
+		}
+		new Typewriter(el);
+	});
+</script>
+
+<style>
+	.typewriter {
+		position: relative;
+	}
+	.typewriter::after {
+		content: "|";
+		margin-left: 2px;
+		animation: lumen-blink 1s step-end infinite;
+	}
+	@keyframes lumen-blink {
+		0%,
+		50% {
+			opacity: 1;
+		}
+		51%,
+		100% {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.typewriter::after {
+			animation: none;
+		}
+	}
+</style>

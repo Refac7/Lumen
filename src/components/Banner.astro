@@ -1,0 +1,230 @@
+---
+import { Icon } from "astro-icon/components";
+import TypewriterText from "@/components/TypewriterText.astro";
+import { background } from "@/config/background";
+import { profile } from "@/config/profile";
+
+const subtitles = [profile.bio, ...profile.about];
+---
+
+<section class="card-base banner rise">
+
+	<div class="banner-media" aria-hidden="true">
+		<picture>
+			{
+				background.mobile && (
+					<source
+						media="(max-width: 640px)"
+						srcset={background.mobile}
+					/>
+				)
+			}
+			<img
+				src={background.desktop}
+				alt=""
+				decoding="async"
+				fetchpriority="high"
+			/>
+		</picture>
+	</div>
+	<div class="banner-scrim" aria-hidden="true"></div>
+
+	<div class="banner-inner">
+		<span class="banner-badge">
+			<Icon name="fa7-regular:star" />
+			{profile.badge}
+		</span>
+
+		<h1 class="banner-title">{profile.name}</h1>
+
+		<p class="banner-subtitle">
+			<TypewriterText text={subtitles} />
+		</p>
+
+		<div class="banner-links">
+			{
+				profile.links.map((link) => (
+					<a
+						class="banner-link"
+						href={link.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={link.name}
+						title={link.name}
+					>
+						<Icon name={link.icon} />
+					</a>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.banner {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: clamp(300px, 46vh, 460px);
+		padding: 3rem 1.25rem 2.75rem;
+		text-align: center;
+		/* 壁纸裁进卡片里 */
+		background-color: oklch(0.45 0.05 var(--hue));
+	}
+
+	.banner-media {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+	}
+	.banner-media picture {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.banner-media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: var(--wallpaper-position, center);
+		animation: banner-media-in 700ms var(--ease-decelerate) 60ms both;
+	}
+
+	/* 主题色横幅遮罩：让白色标题在浅色壁纸上依然可读 */
+	.banner-scrim {
+		position: absolute;
+		inset: 0;
+		background: var(--banner-scrim);
+		pointer-events: none;
+	}
+
+	.banner-inner {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		max-width: 46rem;
+	}
+
+	.banner-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		height: 1.75rem;
+		padding-inline: 0.75rem;
+		border-radius: var(--radius-full);
+		background-color: var(--card-bg);
+		border: 1px solid rgb(255 255 255 / 0.35);
+		color: var(--btn-content);
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		box-shadow: var(--shadow-sm);
+		transition:
+			background-color var(--duration-normal) var(--ease-standard),
+			color var(--duration-normal) var(--ease-standard);
+	}
+	.banner-badge :global(svg) {
+		width: 0.75rem;
+		height: 0.75rem;
+	}
+
+	.banner-title {
+		margin: 1rem 0 0.5rem;
+		font-family: "Zen Maru Gothic", inherit;
+		font-size: clamp(2.25rem, 8vw, 3.5rem);
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: 0.03em;
+		color: #fff;
+		text-shadow: 0 4px 24px rgb(0 0 0 / 0.45);
+		overflow-wrap: break-word;
+	}
+
+	.banner-subtitle {
+		display: grid;
+		place-items: center;
+		margin: 0;
+		min-height: 2.9em;
+		width: 100%;
+		font-size: clamp(0.9375rem, 2.4vw, 1.375rem);
+		line-height: 1.45;
+		letter-spacing: 0.05em;
+		color: rgb(255 255 255 / 0.9);
+		text-align: center;
+		text-shadow: 0 2px 16px rgb(0 0 0 / 0.4);
+	}
+
+	.banner-links {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.625rem;
+		margin-top: 1.75rem;
+	}
+
+	/* 玻璃小卡按钮（对应 Firefly .banner-link，与全站卡片同族语言） */
+	.banner-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: var(--radius-xl);
+		color: rgb(255 255 255 / 0.92);
+		background: rgb(255 255 255 / 0.14);
+		border: 1px solid rgb(255 255 255 / 0.2);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		transition:
+			background-color var(--duration-medium) var(--ease-standard),
+			color var(--duration-medium) var(--ease-standard),
+			border-color var(--duration-medium) var(--ease-standard),
+			transform var(--duration-medium) var(--ease-standard),
+			box-shadow var(--duration-medium) var(--ease-standard);
+	}
+	.banner-link :global(svg) {
+		width: 1.25rem;
+		height: 1.25rem;
+		fill: currentColor;
+	}
+	.banner-link:hover {
+		background: rgb(255 255 255 / 0.26);
+		color: #fff;
+		border-color: rgb(255 255 255 / 0.4);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-2px);
+	}
+	.banner-link:active {
+		transform: translateY(0) scale(0.97);
+	}
+
+	@keyframes banner-media-in {
+		from {
+			opacity: 0;
+			transform: scale(1.04);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@media (max-width: 480px) {
+		.banner {
+			padding-inline: 1rem;
+		}
+		.banner-title {
+			font-size: min(2.25rem, 11vw);
+		}
+		.banner-link {
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+	}
+</style>

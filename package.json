@@ -1,0 +1,26 @@
+{
+	"name": "lumen",
+	"type": "module",
+	"version": "0.1.0",
+	"private": true,
+	"packageManager": "pnpm@11.22.0",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"check": "astro check",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@iconify-json/fa7-brands": "^1.2.4",
+		"@iconify-json/fa7-regular": "^1.2.3",
+		"@iconify-json/fa7-solid": "^1.2.5",
+		"astro": "7.3.2",
+		"astro-icon": "^1.2.0"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
+		"typescript": "^6.0.3"
+	}
+}

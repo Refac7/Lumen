@@ -1,0 +1,20 @@
+{
+	"extends": "astro/tsconfigs/base",
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"strictNullChecks": true,
+		"allowJs": false,
+		"noUncheckedSideEffectImports": false,
+		"paths": {
+			"@components/*": ["./src/components/*"],
+			"@layouts/*": ["./src/layouts/*"],
+			"@config/*": ["./src/config/*"],
+			"@styles/*": ["./src/styles/*"],
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": [".astro/types.d.ts", "src/**/*"],
+	"exclude": ["dist"]
+}

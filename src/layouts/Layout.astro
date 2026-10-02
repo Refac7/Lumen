@@ -1,0 +1,72 @@
+---
+import FloatingControls from "@/components/FloatingControls.astro";
+import TopBar from "@/components/TopBar.astro";
+import { background } from "@/config/background";
+import { profile } from "@/config/profile";
+import "@/styles/global.css";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ?? `${profile.name} · Lumen`;
+const pageDescription = description ?? profile.bio;
+const hue = profile.hue;
+const rootStyle = `--hue: ${hue}; --wallpaper-blur: ${background.blur}px; --wallpaper-dim-config: ${background.dim}; --wallpaper-scale: ${background.scale}; --wallpaper-position: ${background.position};`;
+---
+
+<!doctype html>
+<html lang="zh_CN" style={rootStyle}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{pageTitle}</title>
+		<meta name="description" content={pageDescription} />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
+		/>
+		<script is:inline>
+			(function () {
+				var stored = null;
+				try {
+					stored = localStorage.getItem("lumen-theme");
+				} catch (e) {}
+				var dark =
+					stored === "dark" ||
+					(stored !== "light" &&
+						window.matchMedia("(prefers-color-scheme: dark)").matches);
+				document.documentElement.classList.toggle("dark", dark);
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="wallpaper" aria-hidden="true">
+			<picture>
+				{
+					background.mobile && (
+						<source
+							media="(max-width: 640px)"
+							srcset={background.mobile}
+						/>
+					)
+				}
+				<img
+					src={background.desktop}
+					alt=""
+					decoding="async"
+					fetchpriority="high"
+				/>
+			</picture>
+		</div>
+		<TopBar />
+		<slot />
+		<FloatingControls />
+	</body>
+</html>

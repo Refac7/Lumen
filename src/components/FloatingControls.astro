@@ -1,0 +1,89 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="floating-controls">
+	<button
+		type="button"
+		class="float-btn"
+		id="back-to-top"
+		aria-label="回到顶部"
+		title="回到顶部"
+	>
+		<Icon name="fa7-solid:chevron-up" />
+	</button>
+</div>
+
+<script>
+	const button = document.getElementById("back-to-top");
+	if (button) {
+		const sync = () => {
+			button.classList.toggle("is-visible", window.scrollY > 120);
+		};
+		sync();
+		window.addEventListener("scroll", sync, { passive: true });
+		button.addEventListener("click", () => {
+			const reduced = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			).matches;
+			window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+		});
+	}
+</script>
+
+<style>
+	.floating-controls {
+		position: fixed;
+		right: 1rem;
+		bottom: 4rem;
+		z-index: 50;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		pointer-events: none;
+	}
+
+	.float-btn {
+		pointer-events: auto;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: var(--radius-xl);
+		background-color: var(--glass-bg);
+		backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
+		border: 1px solid var(--line-divider);
+		color: var(--btn-content);
+		cursor: pointer;
+		box-shadow:
+			inset 0 1px 0 var(--navbar-glass-highlight),
+			var(--shadow-md);
+		opacity: 0;
+		transform: translateY(8px) scale(0.9);
+		visibility: hidden;
+		transition:
+			opacity var(--duration-medium) var(--ease-standard),
+			transform var(--duration-medium) var(--ease-standard),
+			visibility var(--duration-medium) var(--ease-standard),
+			background-color var(--duration-normal) var(--ease-standard),
+			color var(--duration-normal) var(--ease-standard);
+	}
+	.float-btn.is-visible {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		visibility: visible;
+	}
+	.float-btn:hover {
+		background-color: var(--btn-regular-bg-hover);
+		color: var(--primary);
+	}
+	.float-btn:active {
+		transform: translateY(0) scale(0.94);
+	}
+	.float-btn :global(svg) {
+		width: 1rem;
+		height: 1rem;
+	}
+</style>

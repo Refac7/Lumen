@@ -1,0 +1,166 @@
+---
+import { Icon } from "astro-icon/components";
+import type { ProfileLink } from "@/config/profile";
+import { profile } from "@/config/profile";
+
+const groups: { label: string; items: ProfileLink[] }[] = [];
+for (const link of profile.links) {
+	let group = groups.find((item) => item.label === link.group);
+	if (!group) {
+		group = { label: link.group, items: [] };
+		groups.push(group);
+	}
+	group.items.push(link);
+}
+---
+
+<div class="link-groups">
+	{
+		groups.map((group) => (
+			<div class="link-group">
+				<div class="group-label">{group.label}</div>
+				<ul class="link-list">
+					{group.items.map((link) => (
+						<li>
+							<a
+								class="link-row"
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={link.name}
+							>
+								<span class="link-left">
+									<span class="link-icon">
+										<Icon name={link.icon} />
+									</span>
+									<span class="link-text">
+										<span class="link-name">{link.name}</span>
+										<span class="link-url">{link.hint ?? link.url}</span>
+									</span>
+								</span>
+								<Icon
+									name="fa7-solid:arrow-up-right-from-square"
+									class="link-arrow"
+								/>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.link-groups {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding: 0.25rem 1.25rem 0.375rem;
+	}
+
+	.group-label {
+		padding: 0 0.125rem 0.5rem;
+		font-size: 0.6875rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: rgb(0 0 0 / 0.32);
+		transition: color var(--duration-normal) var(--ease-standard);
+	}
+	:global(.dark) .group-label {
+		color: rgb(255 255 255 / 0.32);
+	}
+
+	/* 链接小卡网格：窄屏单列，宽屏自动流式多列 */
+	.link-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.625rem;
+	}
+
+	.link-left {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		min-width: 0;
+	}
+
+	.link-icon {
+		flex: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: var(--radius-lg);
+		background-color: var(--btn-regular-bg);
+		color: var(--btn-content);
+		font-size: 1.125rem;
+		transition:
+			background-color var(--duration-normal) var(--ease-standard),
+			color var(--duration-normal) var(--ease-standard),
+			transform var(--duration-normal) var(--ease-standard);
+	}
+	.link-icon :global(svg) {
+		width: 1.125rem;
+		height: 1.125rem;
+	}
+	.link-row:hover .link-icon {
+		background-color: var(--primary);
+		color: #fff;
+		transform: translateY(-1px);
+	}
+
+	.link-text {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		line-height: 1.35;
+	}
+
+	.link-name {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.link-arrow {
+		flex: none;
+		width: 0.75rem;
+		height: 0.75rem;
+		opacity: 0.4;
+		transform: translate(0, 0);
+		transition:
+			opacity var(--duration-normal) var(--ease-standard),
+			transform var(--duration-normal) var(--ease-standard);
+	}
+	.link-row:hover .link-arrow,
+	.link-row:focus-visible .link-arrow {
+		opacity: 1;
+		transform: translate(2px, -2px);
+	}
+
+	/* 桌面端：宽屏下链接小卡两列流式排布 */
+	@media (min-width: 640px) {
+		.link-list {
+			grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+		}
+	}
+
+	/* 桌面端：加宽组间距，组与组之间更透气 */
+	@media (min-width: 960px) {
+		.link-groups {
+			gap: 1.25rem;
+			padding-bottom: 0.5rem;
+		}
+		.group-label {
+			padding-bottom: 0.625rem;
+		}
+	}
+</style>

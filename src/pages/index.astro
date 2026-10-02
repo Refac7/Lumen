@@ -1,0 +1,152 @@
+---
+import { Icon } from "astro-icon/components";
+import Banner from "@/components/Banner.astro";
+import LinkList from "@/components/LinkList.astro";
+import ProfileCard from "@/components/ProfileCard.astro";
+import { profile } from "@/config/profile";
+import Layout from "@/layouts/Layout.astro";
+
+const currentYear = new Date().getFullYear();
+---
+
+<Layout>
+	<main class="page">
+		<div class="content-panel">
+			<Banner />
+
+			<div class="content-grid">
+				<div class="col-left">
+					<ProfileCard />
+				</div>
+
+				<section class="card-base links rise" style="animation-delay: 120ms">
+					<div class="card-head">
+						<span class="card-head-title">
+							<Icon name="fa7-solid:link" />
+							Links
+						</span>
+						<span class="card-head-badge">{profile.links.length}</span>
+					</div>
+					<div class="links-body">
+						<LinkList />
+					</div>
+					<div class="card-foot">
+						<Icon name="fa7-solid:arrow-up-right-from-square" />
+						链接均在新标签页打开
+					</div>
+				</section>
+			</div>
+
+			<footer
+				class="card-base site-footer rise"
+				style="animation-delay: 180ms"
+			>
+				<div class="footer-line">
+					<span>&copy; <span>{currentYear}</span> {profile.name}. All Rights
+						Reserved.</span>
+					<span aria-hidden="true">/</span>
+					<span>Powered by</span>
+					<a
+						class="footer-link"
+						href="https://astro.build"
+						target="_blank"
+						rel="noopener noreferrer">Astro</a
+					>
+					<span aria-hidden="true">&</span>
+					<span>Lumen</span>
+				</div>
+			</footer>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.page {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		padding-top: 4.75rem;
+		padding-bottom: 2.5rem;
+	}
+
+	/* 内容面板：卡片统一下落的容器 */
+	.content-panel {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		max-width: 68rem;
+		margin: 0 auto;
+		padding-inline: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.content-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 1rem;
+	}
+	.col-left {
+		min-width: 0;
+	}
+
+	/* ===== links card ===== */
+	.links {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		padding-bottom: 0.75rem;
+	}
+
+	/* ===== footer card ===== */
+	.site-footer {
+		padding: 0.875rem 1.25rem;
+		text-align: center;
+		font-size: 0.8125rem;
+		color: rgb(0 0 0 / 0.55);
+		transition: color var(--duration-normal) var(--ease-standard);
+	}
+	:global(.dark) .site-footer {
+		color: rgb(255 255 255 / 0.55);
+	}
+	.footer-line {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.375rem;
+	}
+	.footer-link {
+		color: var(--primary);
+		font-weight: 500;
+		border-radius: var(--radius-md);
+		padding: 0.125rem 0.25rem;
+		margin: -0.125rem -0.25rem;
+		transition: background-color var(--duration-normal) var(--ease-standard);
+	}
+	.footer-link:hover {
+		background-color: var(--btn-plain-bg-hover);
+	}
+
+	/* ===== 桌面端：左 Profile 小卡片（sticky） / 右链接卡片 ===== */
+	@media (min-width: 960px) {
+		.page {
+			padding-top: 5.25rem;
+			padding-bottom: 3rem;
+		}
+		.content-panel {
+			padding-inline: 1.25rem;
+			gap: 1.25rem;
+		}
+		.content-grid {
+			grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
+			gap: 1.25rem;
+			align-items: start;
+		}
+		.col-left {
+			position: sticky;
+			top: 4.75rem;
+		}
+	}
+</style>
